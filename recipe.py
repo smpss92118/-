@@ -7,13 +7,17 @@ class recipeSpider(scrapy.Spider):
     start_urls = ['https://icook.tw/categories/104']
 
     def parse(self, response):
-        target = response.xpath('//a[@class = "browse-recipe-link"]')
-        print(target)
+        target = response.xpath('.//a[@class = "browse-recipe-link"]')
+        #//*[@id="o-wrapper"]/div[4]/div/main/ul
+        #print(target)
         for tag in target:
-            print(tag)
+            print(f"tag = {tag}")
             ticks = time.time()
-            title = tag.xpath('.//span[contains(@class, "browse-recipe-name")]/text()').extract_first()
+            title = tag.xpath('.//h2[contains(@class, "browse-recipe-name")]/text()').extract_first()
+
             href = tag.xpath('.//@href').extract_first()
+            print(f"href = {href}")
+            print(f"title = {title[11:-1]}")
            # yield{
            #     'title': title,
            #     'href': href
